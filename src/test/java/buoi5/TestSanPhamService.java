@@ -26,7 +26,8 @@ public class TestSanPhamService {
     @Test
     public void testAddSanPhamKOHopLe() {
         SanPham sanPham = new SanPham("BN2", "ten 1", 1999, 9.9f, 101, "dm1");
-        assertThrows(IllegalArgumentException.class, () -> sanPhamService.them(sanPham));
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> sanPhamService.them(sanPham));
+        assertEquals("So luong phai lon hon 1 va be hon 100", ex.getMessage());
     }
 
     @Test
@@ -46,7 +47,16 @@ public class TestSanPhamService {
         SanPham sanPham = new SanPham("BN1", "ten 1", 1999, 9.9f, 10, "dm1");
         sanPhamService.them(sanPham);
         SanPham sanPham1 = new SanPham("BN1", "ten 1", 1999, 9.9f, 10, "dm1");
-        assertThrows(IllegalArgumentException.class, () -> sanPhamService.them(sanPham1));
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> sanPhamService.them(sanPham1));
+        assertEquals("San Pham da ton tai", ex.getMessage());
     }
 
+    @Test
+    public void testSuaHopLe() {
+        SanPham sanPham = new SanPham("BN1", "ten 1", 1999, 9.9f, 10, "dm1");
+        sanPhamService.sua(sanPham);
+        assertEquals(10, sanPhamService.sanPham.getSoLuong());
+    }
+
+    
 }

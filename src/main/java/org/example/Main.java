@@ -14,4 +14,52 @@ public class Main {
             System.out.println("i = " + i);
         }
     }
+
+
+    Các bước CI/CD trên GitHub
+
+    B1: khởi tạo git
+    git init
+    git add .
+    git commit -m "Initial commit of project"
+    git branch -M main
+    git remote add origin <<link github>>
+    git push -u origin main
+
+    B2: Tạo CI
+    mkdir -p .github/workflows
+
+    B3: tao notepad
+    notepad .github/workflows/ci.yml
+
+    B4 : them cyml
+    name: Java CI
+
+    on:
+      push:
+        branches: [ "main" ]
+      pull_request:
+        branches: [ "main" ]
+      workflow_dispatch:
+
+    jobs:
+      build:
+        runs-on: ubuntu-latest
+
+        steps:
+          - uses: actions/checkout@v4
+          - name: Set up JDK 17
+            uses: actions/setup-java@v4
+            with:
+              java-version: '17'
+              distribution: 'temurin'
+          - name: Build with Maven
+            run: mvn -B package --file pom.xml
+     B5 : commit
+    git add .
+    git commit -m"feat: Add Github Actions CI workflow for Java"
+    git push origin main
+
+
+
 }
